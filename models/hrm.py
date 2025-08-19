@@ -7,25 +7,13 @@ import torch.nn.functional as F
 from torch import nn
 from pydantic import BaseModel
 
-# Assuming these layers are in src.layers
-from ..layers import (
-    rms_norm,
-    SwiGLU,
-    Attention,
-    RotaryEmbedding,
-    CosSin,
-    CastedEmbedding,
-    CastedLinear,
-    CastedSparseEmbedding,
-)
+from typing import Tuple
+import torch
+from .common import trunc_normal_init_
+from .layers import rms_norm, SwiGLU, Attention, RotaryEmbedding, CastedEmbedding, CastedLinear
+from .sparse_embedding import CastedSparseEmbedding
 
-
-# This is a placeholder for a function that might be needed from the
-# original repo's common.py
-def trunc_normal_init_(*args, **kwargs):
-    # In a real scenario, we'd copy the implementation of this function.
-    # For now, we'll just use a standard normal init.
-    return nn.init.normal_(*args, **kwargs)
+CosSin = Tuple[torch.Tensor, torch.Tensor]
 
 
 class HierarchicalReasoningModel_ACTV1Config(BaseModel):
@@ -184,7 +172,6 @@ class HierarchicalReasoningModel_ACTV1_Inner(nn.Module):
                 dim=self.config.hidden_size // self.config.num_heads,
                 max_position_embeddings=self.config.seq_len + self.puzzle_emb_len,
                 base=self.config.rope_theta,
-                dtype=self.forward_dtype,
             )
         elif self.config.pos_encodings == "learned":
             self.embed_pos = CastedEmbedding(
