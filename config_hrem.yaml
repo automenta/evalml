@@ -1,0 +1,41 @@
+# config_hrem.yaml
+data:
+  name: "tinyshakespeare"
+  url: "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
+  data_file: "tinyshakespeare.txt"
+  train_split: 0.9
+  train_subset: 10000
+  eval_subset: 1000
+
+model:
+  model_type: "hrem"
+  vocab_size: 50257 # This will be updated by the script
+  input_size: 50257 # This will be updated by the script
+  hidden_size: 256
+  output_size: 50257 # This will be updated by the script
+  num_layers_inner: 2
+  num_heads_inner: 4
+  num_layers_outer: 2
+  use_memory: false
+  forward_dtype: "float32"
+  H_layers: 2
+  L_layers: 2
+  H_cycles: 1
+  L_cycles: 1
+  num_heads: 4
+  expansion: 2.0
+  pos_encodings: "rope"
+  halt_max_steps: 1
+  halt_exploration_prob: 0.0
+  puzzle_emb_ndim: 0
+  num_puzzle_identifiers: 1
+
+optimizer:
+  name: "adamw"
+  lr: 1e-4
+
+evaluation:
+  block_size: 128
+  batch_size: 16
+  num_epochs: 1
+  model_name: "HREM Novel"

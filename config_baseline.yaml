@@ -1,0 +1,26 @@
+# config_baseline.yaml
+data:
+  name: "tinyshakespeare"
+  url: "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
+  data_file: "tinyshakespeare.txt"
+  train_split: 0.9
+  train_subset: 10000
+  eval_subset: 1000
+
+model:
+  model_type: "gpt2"
+  vocab_size: 50257 # This will be updated by the script
+  n_positions: 128
+  n_embd: 768
+  n_layer: 12
+  n_head: 12
+
+optimizer:
+  name: "adamw"
+  lr: 5e-5
+
+evaluation:
+  block_size: 128
+  batch_size: 16
+  num_epochs: 1
+  model_name: "GPT-2 Baseline"
