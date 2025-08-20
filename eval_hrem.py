@@ -13,11 +13,27 @@ def run_experiment(config_path):
     command = [sys.executable, "main.py", "--config", config_path]
 
     try:
-        subprocess.run(command, check=True)
+        # Capture output for better error reporting
+        result = subprocess.run(
+            command,
+            check=True,
+            capture_output=True,
+            text=True,
+            encoding='utf-8'
+        )
+        print(result.stdout)
+        if result.stderr:
+            print("--- STDERR ---")
+            print(result.stderr)
+
     except FileNotFoundError:
         print("Error: main.py not found. Make sure you are in the correct directory.")
     except subprocess.CalledProcessError as e:
         print(f"An error occurred while running the experiment: {e}")
+        print("\n--- STDOUT ---")
+        print(e.stdout)
+        print("\n--- STDERR ---")
+        print(e.stderr)
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
