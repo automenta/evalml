@@ -3,6 +3,7 @@ import requests
 import torch
 from torch.utils.data import Dataset, DataLoader
 from transformers import GPT2Tokenizer, default_data_collator
+from transformers.utils import logging
 from config import DataConfig
 
 class ShakespeareDataset(Dataset):
@@ -39,7 +40,13 @@ def setup_data(data_config: DataConfig, eval_config: 'EvalConfig'):
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     tokenizer.pad_token = tokenizer.eos_token
 
-    tokenized_text = tokenizer.encode(text, return_tensors='pt')[0]
+    # Temporarily suppress the warning about the long sequence length,
+    # as the logic here handles chunking manually.
+    logging.set_verbosity_error()
+    tokenized_ids = tokenizer.encode(text)
+    logging.set_verbosity_warning()  # Restore default verbosity
+
+    tokenized_text = torch.tensor(tokenized_ids, dtype=torch.long)
 
     # Create datasets using the subset sizes from the config
     train_end = int(data_config.train_split * len(tokenized_text))
