@@ -1,5 +1,6 @@
 import subprocess
 import os
+import sys
 
 def run_experiment(config_path):
     """Runs an experiment using the main.py script."""
@@ -9,7 +10,7 @@ def run_experiment(config_path):
 
     print(f"\n--- Running experiment with config: {config_path} ---")
 
-    command = ["python", "main.py", "--config", config_path]
+    command = [sys.executable, "main.py", "--config", config_path]
 
     try:
         subprocess.run(command, check=True)
