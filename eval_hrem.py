@@ -4,19 +4,42 @@ import sys
 import yaml
 import re
 import json
+import argparse
+import tempfile
+import copy
 
-def run_experiment(config_path):
+def run_experiment(config_path, full_eval=False):
     """
     Runs an experiment using main.py and returns the metrics.
+    If full_eval is True, it modifies the config to run a full evaluation.
     """
     if not os.path.exists(config_path):
         print(f"Configuration file not found: {config_path}")
         return None
 
-    print(f"\n--- Running experiment with config: {config_path} ---")
-    command = [sys.executable, "main.py", "--config", config_path]
+    effective_config_path = config_path
+    temp_file = None
 
+    temp_file_path = None
     try:
+        with open(config_path, 'r') as f:
+            config = yaml.safe_load(f)
+
+        if full_eval:
+            print(f"\n--- Running full evaluation for {config_path} ---")
+            modified_config = copy.deepcopy(config)
+            modified_config['evaluation']['smoke_test'] = False
+
+            with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix=".yaml") as temp:
+                yaml.dump(modified_config, temp)
+                temp_file_path = temp.name
+            effective_config_path = temp_file_path
+        else:
+            print(f"\n--- Running smoke test for {config_path} ---")
+            effective_config_path = config_path
+
+        command = [sys.executable, "main.py", "--config", effective_config_path]
+
         result = subprocess.run(
             command,
             check=True,
@@ -32,8 +55,6 @@ def run_experiment(config_path):
         # Find the metrics line in the output and parse it
         metrics_match = re.search(r"Metrics: (\{.*\})", result.stdout)
         if metrics_match:
-            # The output from printing a dict uses single quotes, which is not valid JSON.
-            # Replace single quotes with double quotes to parse with the json module.
             metrics_str = metrics_match.group(1).replace("'", '"')
             try:
                 metrics_dict = json.loads(metrics_str)
@@ -59,6 +80,9 @@ def run_experiment(config_path):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return None
+    finally:
+        if temp_file_path:
+            os.remove(temp_file_path)
 
 def display_configs(baseline_config, hrem_config):
     """Displays the configurations side-by-side."""
@@ -94,7 +118,15 @@ def display_comparison(baseline_results, hrem_results):
         print(row)
     print("-" * len(header))
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser(description="Run HREM evaluation against a baseline.")
+    parser.add_argument(
+        "--full-eval",
+        action="store_true",
+        help="Run full evaluation instead of a smoke test."
+    )
+    args = parser.parse_args()
+
     baseline_config_path = "config_baseline.yaml"
     hrem_config_path = "config_hrem.yaml"
 
@@ -115,10 +147,13 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Run experiments and get results
-    baseline_results = run_experiment(baseline_config_path)
-    hrem_results = run_experiment(hrem_config_path)
+    baseline_results = run_experiment(baseline_config_path, full_eval=args.full_eval)
+    hrem_results = run_experiment(hrem_config_path, full_eval=args.full_eval)
 
     # Display comparison
     display_comparison(baseline_results, hrem_results)
 
     print("\n\n--- HREM Evaluation Script Finished ---")
+
+if __name__ == "__main__":
+    main()

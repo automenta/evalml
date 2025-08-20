@@ -41,7 +41,8 @@ def main(config_path: str):
         eval_dataloader=eval_dataloader,
         optimizer=optimizer,
         num_epochs=config.evaluation.num_epochs,
-        model_name=config.evaluation.model_name
+        model_name=config.evaluation.model_name,
+        smoke_test=config.evaluation.smoke_test
     )
 
     # 6. Print results

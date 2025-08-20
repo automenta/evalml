@@ -24,3 +24,4 @@ evaluation:
   batch_size: 16
   num_epochs: 1
   model_name: "GPT-2 Baseline"
+  smoke_test: true

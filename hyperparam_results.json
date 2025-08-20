@@ -1,0 +1,402 @@
+[
+    {
+        "config": {
+            "data": {
+                "name": "tinyshakespeare",
+                "url": "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+                "data_file": "tinyshakespeare.txt",
+                "train_split": 0.9,
+                "train_subset": 10000,
+                "eval_subset": 1000
+            },
+            "model": {
+                "model_type": "hrem",
+                "vocab_size": 50257,
+                "input_size": 50257,
+                "hidden_size": 128,
+                "output_size": 50257,
+                "num_layers_inner": 2,
+                "num_heads_inner": 4,
+                "num_layers_outer": 1,
+                "use_memory": false,
+                "forward_dtype": "float32",
+                "H_layers": 2,
+                "L_layers": 2,
+                "H_cycles": 1,
+                "L_cycles": 1,
+                "num_heads": 4,
+                "expansion": 2.0,
+                "pos_encodings": "rope",
+                "halt_max_steps": 1,
+                "halt_exploration_prob": 0.0,
+                "puzzle_emb_ndim": 0,
+                "num_puzzle_identifiers": 1
+            },
+            "optimizer": {
+                "name": "adamw",
+                "lr": 0.0001
+            },
+            "evaluation": {
+                "block_size": 128,
+                "batch_size": 16,
+                "num_epochs": 1,
+                "model_name": "HREM Novel (hidden_size=128, num_layers_outer=1, lr=0.0001)",
+                "smoke_test": true
+            }
+        },
+        "metrics": {
+            "eval_loss": 11.014763832092285,
+            "perplexity": 60764.67112779039
+        }
+    },
+    {
+        "config": {
+            "data": {
+                "name": "tinyshakespeare",
+                "url": "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+                "data_file": "tinyshakespeare.txt",
+                "train_split": 0.9,
+                "train_subset": 10000,
+                "eval_subset": 1000
+            },
+            "model": {
+                "model_type": "hrem",
+                "vocab_size": 50257,
+                "input_size": 50257,
+                "hidden_size": 128,
+                "output_size": 50257,
+                "num_layers_inner": 2,
+                "num_heads_inner": 4,
+                "num_layers_outer": 1,
+                "use_memory": false,
+                "forward_dtype": "float32",
+                "H_layers": 2,
+                "L_layers": 2,
+                "H_cycles": 1,
+                "L_cycles": 1,
+                "num_heads": 4,
+                "expansion": 2.0,
+                "pos_encodings": "rope",
+                "halt_max_steps": 1,
+                "halt_exploration_prob": 0.0,
+                "puzzle_emb_ndim": 0,
+                "num_puzzle_identifiers": 1
+            },
+            "optimizer": {
+                "name": "adamw",
+                "lr": 0.0005
+            },
+            "evaluation": {
+                "block_size": 128,
+                "batch_size": 16,
+                "num_epochs": 1,
+                "model_name": "HREM Novel (hidden_size=128, num_layers_outer=1, lr=0.0005)",
+                "smoke_test": true
+            }
+        },
+        "metrics": {
+            "eval_loss": 10.645960807800293,
+            "perplexity": 42022.514274740744
+        }
+    },
+    {
+        "config": {
+            "data": {
+                "name": "tinyshakespeare",
+                "url": "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+                "data_file": "tinyshakespeare.txt",
+                "train_split": 0.9,
+                "train_subset": 10000,
+                "eval_subset": 1000
+            },
+            "model": {
+                "model_type": "hrem",
+                "vocab_size": 50257,
+                "input_size": 50257,
+                "hidden_size": 128,
+                "output_size": 50257,
+                "num_layers_inner": 2,
+                "num_heads_inner": 4,
+                "num_layers_outer": 2,
+                "use_memory": false,
+                "forward_dtype": "float32",
+                "H_layers": 2,
+                "L_layers": 2,
+                "H_cycles": 1,
+                "L_cycles": 1,
+                "num_heads": 4,
+                "expansion": 2.0,
+                "pos_encodings": "rope",
+                "halt_max_steps": 1,
+                "halt_exploration_prob": 0.0,
+                "puzzle_emb_ndim": 0,
+                "num_puzzle_identifiers": 1
+            },
+            "optimizer": {
+                "name": "adamw",
+                "lr": 0.0001
+            },
+            "evaluation": {
+                "block_size": 128,
+                "batch_size": 16,
+                "num_epochs": 1,
+                "model_name": "HREM Novel (hidden_size=128, num_layers_outer=2, lr=0.0001)",
+                "smoke_test": true
+            }
+        },
+        "metrics": {
+            "eval_loss": 11.06508731842041,
+            "perplexity": 63900.81013283614
+        }
+    },
+    {
+        "config": {
+            "data": {
+                "name": "tinyshakespeare",
+                "url": "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+                "data_file": "tinyshakespeare.txt",
+                "train_split": 0.9,
+                "train_subset": 10000,
+                "eval_subset": 1000
+            },
+            "model": {
+                "model_type": "hrem",
+                "vocab_size": 50257,
+                "input_size": 50257,
+                "hidden_size": 128,
+                "output_size": 50257,
+                "num_layers_inner": 2,
+                "num_heads_inner": 4,
+                "num_layers_outer": 2,
+                "use_memory": false,
+                "forward_dtype": "float32",
+                "H_layers": 2,
+                "L_layers": 2,
+                "H_cycles": 1,
+                "L_cycles": 1,
+                "num_heads": 4,
+                "expansion": 2.0,
+                "pos_encodings": "rope",
+                "halt_max_steps": 1,
+                "halt_exploration_prob": 0.0,
+                "puzzle_emb_ndim": 0,
+                "num_puzzle_identifiers": 1
+            },
+            "optimizer": {
+                "name": "adamw",
+                "lr": 0.0005
+            },
+            "evaluation": {
+                "block_size": 128,
+                "batch_size": 16,
+                "num_epochs": 1,
+                "model_name": "HREM Novel (hidden_size=128, num_layers_outer=2, lr=0.0005)",
+                "smoke_test": true
+            }
+        },
+        "metrics": {
+            "eval_loss": 10.572993278503418,
+            "perplexity": 39065.43261104045
+        }
+    },
+    {
+        "config": {
+            "data": {
+                "name": "tinyshakespeare",
+                "url": "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+                "data_file": "tinyshakespeare.txt",
+                "train_split": 0.9,
+                "train_subset": 10000,
+                "eval_subset": 1000
+            },
+            "model": {
+                "model_type": "hrem",
+                "vocab_size": 50257,
+                "input_size": 50257,
+                "hidden_size": 256,
+                "output_size": 50257,
+                "num_layers_inner": 2,
+                "num_heads_inner": 4,
+                "num_layers_outer": 1,
+                "use_memory": false,
+                "forward_dtype": "float32",
+                "H_layers": 2,
+                "L_layers": 2,
+                "H_cycles": 1,
+                "L_cycles": 1,
+                "num_heads": 4,
+                "expansion": 2.0,
+                "pos_encodings": "rope",
+                "halt_max_steps": 1,
+                "halt_exploration_prob": 0.0,
+                "puzzle_emb_ndim": 0,
+                "num_puzzle_identifiers": 1
+            },
+            "optimizer": {
+                "name": "adamw",
+                "lr": 0.0001
+            },
+            "evaluation": {
+                "block_size": 128,
+                "batch_size": 16,
+                "num_epochs": 1,
+                "model_name": "HREM Novel (hidden_size=256, num_layers_outer=1, lr=0.0001)",
+                "smoke_test": true
+            }
+        },
+        "metrics": {
+            "eval_loss": 10.994095802307129,
+            "perplexity": 59521.67448781915
+        }
+    },
+    {
+        "config": {
+            "data": {
+                "name": "tinyshakespeare",
+                "url": "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+                "data_file": "tinyshakespeare.txt",
+                "train_split": 0.9,
+                "train_subset": 10000,
+                "eval_subset": 1000
+            },
+            "model": {
+                "model_type": "hrem",
+                "vocab_size": 50257,
+                "input_size": 50257,
+                "hidden_size": 256,
+                "output_size": 50257,
+                "num_layers_inner": 2,
+                "num_heads_inner": 4,
+                "num_layers_outer": 1,
+                "use_memory": false,
+                "forward_dtype": "float32",
+                "H_layers": 2,
+                "L_layers": 2,
+                "H_cycles": 1,
+                "L_cycles": 1,
+                "num_heads": 4,
+                "expansion": 2.0,
+                "pos_encodings": "rope",
+                "halt_max_steps": 1,
+                "halt_exploration_prob": 0.0,
+                "puzzle_emb_ndim": 0,
+                "num_puzzle_identifiers": 1
+            },
+            "optimizer": {
+                "name": "adamw",
+                "lr": 0.0005
+            },
+            "evaluation": {
+                "block_size": 128,
+                "batch_size": 16,
+                "num_epochs": 1,
+                "model_name": "HREM Novel (hidden_size=256, num_layers_outer=1, lr=0.0005)",
+                "smoke_test": true
+            }
+        },
+        "metrics": {
+            "eval_loss": 10.214081764221191,
+            "perplexity": 27284.710360371762
+        }
+    },
+    {
+        "config": {
+            "data": {
+                "name": "tinyshakespeare",
+                "url": "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+                "data_file": "tinyshakespeare.txt",
+                "train_split": 0.9,
+                "train_subset": 10000,
+                "eval_subset": 1000
+            },
+            "model": {
+                "model_type": "hrem",
+                "vocab_size": 50257,
+                "input_size": 50257,
+                "hidden_size": 256,
+                "output_size": 50257,
+                "num_layers_inner": 2,
+                "num_heads_inner": 4,
+                "num_layers_outer": 2,
+                "use_memory": false,
+                "forward_dtype": "float32",
+                "H_layers": 2,
+                "L_layers": 2,
+                "H_cycles": 1,
+                "L_cycles": 1,
+                "num_heads": 4,
+                "expansion": 2.0,
+                "pos_encodings": "rope",
+                "halt_max_steps": 1,
+                "halt_exploration_prob": 0.0,
+                "puzzle_emb_ndim": 0,
+                "num_puzzle_identifiers": 1
+            },
+            "optimizer": {
+                "name": "adamw",
+                "lr": 0.0001
+            },
+            "evaluation": {
+                "block_size": 128,
+                "batch_size": 16,
+                "num_epochs": 1,
+                "model_name": "HREM Novel (hidden_size=256, num_layers_outer=2, lr=0.0001)",
+                "smoke_test": true
+            }
+        },
+        "metrics": {
+            "eval_loss": 10.697820663452148,
+            "perplexity": 44259.294051863
+        }
+    },
+    {
+        "config": {
+            "data": {
+                "name": "tinyshakespeare",
+                "url": "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+                "data_file": "tinyshakespeare.txt",
+                "train_split": 0.9,
+                "train_subset": 10000,
+                "eval_subset": 1000
+            },
+            "model": {
+                "model_type": "hrem",
+                "vocab_size": 50257,
+                "input_size": 50257,
+                "hidden_size": 256,
+                "output_size": 50257,
+                "num_layers_inner": 2,
+                "num_heads_inner": 4,
+                "num_layers_outer": 2,
+                "use_memory": false,
+                "forward_dtype": "float32",
+                "H_layers": 2,
+                "L_layers": 2,
+                "H_cycles": 1,
+                "L_cycles": 1,
+                "num_heads": 4,
+                "expansion": 2.0,
+                "pos_encodings": "rope",
+                "halt_max_steps": 1,
+                "halt_exploration_prob": 0.0,
+                "puzzle_emb_ndim": 0,
+                "num_puzzle_identifiers": 1
+            },
+            "optimizer": {
+                "name": "adamw",
+                "lr": 0.0005
+            },
+            "evaluation": {
+                "block_size": 128,
+                "batch_size": 16,
+                "num_epochs": 1,
+                "model_name": "HREM Novel (hidden_size=256, num_layers_outer=2, lr=0.0005)",
+                "smoke_test": true
+            }
+        },
+        "metrics": {
+            "eval_loss": 10.488316535949707,
+            "perplexity": 35893.680773122804
+        }
+    }
+]

@@ -39,3 +39,4 @@ evaluation:
   batch_size: 16
   num_epochs: 1
   model_name: "HREM Novel"
+  smoke_test: true

@@ -67,6 +67,7 @@ class EvalConfig(BaseModel):
     batch_size: int = 16
     num_epochs: int = 1
     model_name: str
+    smoke_test: bool = True
 
 class ExperimentConfig(BaseModel):
     """Top-level configuration for an experiment."""
