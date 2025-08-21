@@ -29,12 +29,17 @@ def rotate_half(x: torch.Tensor):
 def apply_rotary_pos_emb(q: torch.Tensor, k: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor):
     # q, k: [bs, seq_len, num_heads, head_dim]
     # cos, sin: [seq_len, head_dim]
+
+    # Reshape cos and sin for broadcasting
+    cos = cos.unsqueeze(0).unsqueeze(2) # [1, seq_len, 1, head_dim]
+    sin = sin.unsqueeze(0).unsqueeze(2) # [1, seq_len, 1, head_dim]
+
     orig_dtype = q.dtype
     q = q.to(cos.dtype)
     k = k.to(cos.dtype)
 
-    q_embed = (q * cos.unsqueeze(-2)) + (rotate_half(q) * sin.unsqueeze(-2))
-    k_embed = (k * cos.unsqueeze(-2)) + (rotate_half(k) * sin.unsqueeze(-2))
+    q_embed = (q * cos) + (rotate_half(q) * sin)
+    k_embed = (k * cos) + (rotate_half(k) * sin)
 
     return q_embed.to(orig_dtype), k_embed.to(orig_dtype)
 

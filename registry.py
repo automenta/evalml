@@ -1,8 +1,9 @@
 from torch.optim import AdamW
 from transformers import GPT2LMHeadModel, GPT2Config
 from models.hrem import HREM
+from models.evolved import DynamicModel
 from wrappers import HREMWrapper
-from config import ExperimentConfig
+from config import ExperimentConfig, EvolvedModelConfig
 
 def get_model_and_optimizer(config: ExperimentConfig):
     """
@@ -24,6 +25,9 @@ def get_model_and_optimizer(config: ExperimentConfig):
 
         hrem_model_instance = HREM(hrem_config_dict)
         model = HREMWrapper(hrem_model_instance)
+    elif model_config.model_type == 'evolved':
+        # The DynamicModel takes the EvolvedModelConfig directly
+        model = DynamicModel(model_config)
     else:
         raise ValueError(f"Unknown model type: {model_config.model_type}")
 

@@ -55,6 +55,57 @@ class HREMModelConfig(BaseModelConfig):
     sparse_addressing: bool = False
     use_location_addressing: bool = False
 
+# --- Configuration for Evolvable Architectures ---
+
+class LayerConfig(BaseModel):
+    """Configuration for a single layer in a dynamic model."""
+    layer_type: Literal["transformer_block"] = "transformer_block"
+    n_head: int = 8
+    # Other layer-specific parameters can be added here
+
+class EvolvedModelConfig(BaseModelConfig):
+    """Configuration for a dynamically evolved model."""
+    model_type: Literal["evolved"] = "evolved"
+    vocab_size: int = 50257
+    n_positions: int = 128
+    n_embd: int = 768
+    layers: list[LayerConfig] = Field(default_factory=list)
+
+# --- Configuration for the Search Space ---
+
+class IntSearchSpace(BaseModel):
+    """Defines a search space for an integer parameter."""
+    min: int
+    max: int
+
+class FloatSearchSpace(BaseModel):
+    """Defines a search space for a float parameter."""
+    min: float
+    max: float
+
+class ChoiceSearchSpace(BaseModel):
+    """Defines a search space for a categorical parameter."""
+    choices: list[Union[str, int, float]]
+
+class ArchSearchSpace(BaseModel):
+    """Defines the search space for architectural parameters."""
+    n_layer: IntSearchSpace = Field(default_factory=lambda: IntSearchSpace(min=2, max=12))
+    n_head: ChoiceSearchSpace = Field(default_factory=lambda: ChoiceSearchSpace(choices=[4, 8, 12, 16]))
+    # Can add more layer-specific search spaces here
+
+class HyperparamSearchSpace(BaseModel):
+    """Defines the search space for hyperparameters."""
+    lr: FloatSearchSpace = Field(default_factory=lambda: FloatSearchSpace(min=1e-5, max=1e-3))
+
+class DiscoveryConfig(BaseModel):
+    """Configuration for the discovery (evolutionary search) process."""
+    population_size: int = 20
+    num_generations: int = 10
+    mutation_rate: float = 0.1
+    crossover_rate: float = 0.5
+    arch_space: ArchSearchSpace = Field(default_factory=ArchSearchSpace)
+    hyperparam_space: HyperparamSearchSpace = Field(default_factory=HyperparamSearchSpace)
+
 
 class OptimizerConfig(BaseModel):
     """Configuration for the optimizer."""
@@ -72,9 +123,10 @@ class EvalConfig(BaseModel):
 class ExperimentConfig(BaseModel):
     """Top-level configuration for an experiment."""
     data: DataConfig = Field(default_factory=DataConfig)
-    model: Union[GPT2ModelConfig, HREMModelConfig] = Field(..., discriminator='model_type')
+    model: Union[GPT2ModelConfig, HREMModelConfig, EvolvedModelConfig] = Field(..., discriminator='model_type')
     optimizer: OptimizerConfig = Field(default_factory=OptimizerConfig)
     evaluation: EvalConfig
+    discovery: Optional[DiscoveryConfig] = None # Optional discovery config
 
     class Config:
         arbitrary_types_allowed = True

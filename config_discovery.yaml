@@ -1,0 +1,48 @@
+# config_discovery.yaml
+
+# Base configuration for data and evaluation
+data:
+  name: "tinyshakespeare"
+  train_split: 0.9
+
+evaluation:
+  block_size: 128
+  batch_size: 16
+  num_epochs: 1
+  model_name: "Evolved Model" # This will be overwritten by the discovery script
+  smoke_test: true # Use smoke test for quick verification
+
+# Base configuration for the evolved model
+# This provides defaults and fixed parameters like vocab_size, n_embd, etc.
+model:
+  model_type: "evolved"
+  vocab_size: 50257 # Will be updated by the script
+  n_positions: 128
+  n_embd: 256 # Using a smaller embedding for faster smoke test
+  layers: [] # This will be populated by the evolution algorithm
+
+# Base configuration for the optimizer
+optimizer:
+  name: "adamw"
+  lr: 0.001 # This will be evolved
+
+# Configuration for the discovery process
+discovery:
+  population_size: 1 # Minimal population for smoke test
+  num_generations: 1 # Minimal generations for smoke test
+  mutation_rate: 0.8 # High mutation rate for smoke test to ensure changes happen
+  crossover_rate: 0.5
+
+  # Define the search space for architecture
+  arch_space:
+    n_layer:
+      min: 2
+      max: 4 # Small models for smoke test
+    n_head:
+      choices: [2, 4] # Smaller choices for smoke test
+
+  # Define the search space for hyperparameters
+  hyperparam_space:
+    lr:
+      min: 0.0001
+      max: 0.01

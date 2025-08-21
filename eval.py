@@ -22,7 +22,7 @@ def train_and_evaluate(model, train_dataloader, eval_dataloader, optimizer, num_
             if smoke_test and step > 0:
                 break
             outputs = model(**batch)
-            loss = outputs.loss
+            loss = outputs['loss']
             total_loss += loss.item()
             accelerator.backward(loss)
             optimizer.step()
@@ -38,7 +38,7 @@ def train_and_evaluate(model, train_dataloader, eval_dataloader, optimizer, num_
         with torch.no_grad():
             outputs = model(**batch)
 
-        loss = outputs.loss
+        loss = outputs['loss']
         losses.append(accelerator.gather(loss.repeat(batch['input_ids'].shape[0])))
 
     losses = torch.cat(losses)

@@ -1,0 +1,73 @@
+[
+    {
+        "config": {
+            "data": {
+                "name": "tinyshakespeare",
+                "url": "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+                "data_file": "tinyshakespeare.txt",
+                "train_split": 0.9,
+                "train_subset": 10000,
+                "eval_subset": 1000
+            },
+            "model": {
+                "model_type": "evolved",
+                "vocab_size": 50257,
+                "n_positions": 128,
+                "n_embd": 256,
+                "layers": [
+                    {
+                        "layer_type": "transformer_block",
+                        "n_head": 4
+                    },
+                    {
+                        "layer_type": "transformer_block",
+                        "n_head": 4
+                    },
+                    {
+                        "layer_type": "transformer_block",
+                        "n_head": 4
+                    }
+                ]
+            },
+            "optimizer": {
+                "name": "adamw",
+                "lr": 0.0031699191968693912
+            },
+            "evaluation": {
+                "block_size": 128,
+                "batch_size": 16,
+                "num_epochs": 1,
+                "model_name": "Gen_1_Ind_1",
+                "smoke_test": true
+            },
+            "discovery": {
+                "population_size": 1,
+                "num_generations": 1,
+                "mutation_rate": 0.8,
+                "crossover_rate": 0.5,
+                "arch_space": {
+                    "n_layer": {
+                        "min": 2,
+                        "max": 4
+                    },
+                    "n_head": {
+                        "choices": [
+                            2,
+                            4
+                        ]
+                    }
+                },
+                "hyperparam_space": {
+                    "lr": {
+                        "min": 0.0001,
+                        "max": 0.01
+                    }
+                }
+            }
+        },
+        "metrics": {
+            "eval_loss": 9.525527000427246,
+            "perplexity": 13705.150641944287
+        }
+    }
+]
