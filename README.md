@@ -41,3 +41,9 @@ The primary goal of this framework is to automate the discovery of "drastically 
     python discover.py --config config_discovery.yaml
     ```
     The results of each experiment will be saved in `discovery_database.json`.
+
+4.  **Launch the Web UI**:
+    To use the interactive user interface for discovery, evaluation, and comparison:
+    ```bash
+    python app.py
+    ```
