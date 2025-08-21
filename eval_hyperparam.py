@@ -4,7 +4,7 @@ import json
 import os
 import copy
 import yaml
-from eval_hrem import run_experiment
+from comparison import run_experiment
 
 # Define the hyperparameter grid for the HREM model
 # We use a simple dot notation for nested keys
@@ -66,6 +66,12 @@ def main():
         action="store_true",
         help="Run full evaluation instead of a smoke test for each configuration."
     )
+    parser.add_argument(
+        "--baseline-config",
+        type=str,
+        default="config_baseline.yaml",
+        help="Path to the baseline configuration YAML file for comparison."
+    )
     args = parser.parse_args()
 
     print(f"--- Starting Hyperparameter Sweep ---")
@@ -111,10 +117,29 @@ def main():
     print(f"\n\n--- Hyperparameter Sweep Finished ---")
     print(f"Results saved to {args.output_file}")
 
+    # Run baseline experiment
+    print("\n--- Running Baseline Experiment ---")
+    baseline_metrics = run_experiment(args.baseline_config, full_eval=args.full_eval)
+    if baseline_metrics:
+        print("\n--- Baseline Results ---")
+        print(json.dumps(baseline_metrics, indent=2))
+    else:
+        print("Baseline experiment failed or returned no metrics.")
+
     # Display a summary of the results
     if all_results:
         print("\n--- Results Summary (sorted by eval_loss) ---")
         sorted_results = sorted(all_results, key=lambda x: x['metrics'].get('eval_loss', float('inf')))
+
+        # Display baseline results for comparison
+        if baseline_metrics:
+            loss = baseline_metrics.get('eval_loss', 'N/A')
+            perplexity = baseline_metrics.get('perplexity', 'N/A')
+            if isinstance(loss, float): loss = f"{loss:.4f}"
+            if isinstance(perplexity, float): perplexity = f"{perplexity:.4f}"
+            print(f"- {'Baseline':<50} | eval_loss={loss}, perplexity={perplexity}")
+            print("-" * 80)
+
 
         for result in sorted_results:
             model_name = result['config']['evaluation']['model_name']
@@ -122,7 +147,7 @@ def main():
             perplexity = result['metrics'].get('perplexity', 'N/A')
             if isinstance(loss, float): loss = f"{loss:.4f}"
             if isinstance(perplexity, float): perplexity = f"{perplexity:.4f}"
-            print(f"- {model_name}: eval_loss={loss}, perplexity={perplexity}")
+            print(f"- {model_name:<50} | eval_loss={loss}, perplexity={perplexity}")
 
 if __name__ == "__main__":
     main()
